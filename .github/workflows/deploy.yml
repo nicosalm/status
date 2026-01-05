@@ -38,3 +38,4 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy build --project-name=status-salm-dev
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          packageManager: pnpm
