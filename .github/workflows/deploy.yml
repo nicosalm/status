@@ -36,6 +36,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy build --project-name=status-salm-dev
+          command: pages deploy .svelte-kit/cloudflare --project-name=status-salm-dev
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           packageManager: pnpm
