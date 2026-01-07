@@ -41,7 +41,6 @@
         <p>checked: {check.last_check_at}</p>
     </div>
 {/each}
-
 <hr />
 <h2>in the last 7 days</h2>
 <div style="display: flex; flex-wrap: wrap; justify-content: space-between">
