@@ -1,10 +1,9 @@
 <script lang="ts">
-    import type { PageProps } from "./$types";
-    import type { Language, ActivityItem } from "$lib/api";
+    import type { PageProps } from './$types';
+    import type { Language, ActivityItem } from '$lib/api';
 
     let { data }: PageProps = $props();
 
-    // maybe not ideal??
     let { checks, editors } = $derived(data);
     let languages = $derived(
         data.languages.filter((l: Language) => l.name != 'Other' && l.decimal >= 0.5)
@@ -17,42 +16,63 @@
         const hours = (seconds / 3600).toFixed(2);
         return { hours };
     });
+
+    const colors = {
+        UP: '#23C552',
+        DOWN: '#F84F31'
+    };
 </script>
 
-<h1><a href="https://salm.dev/">home</a> / status</h1>
-<hr/>
+<p><a href="https://salm.dev/">home</a> / status</p>
+<h1>Status</h1>
 <h2>services</h2>
 {#each checks as check}
-    <div class="check-summary">
-        <h3><a href={check.url} target="_blank">{check.alias || check.url}</a></h3>
+    <div>
+        <h4><a href={check.url} target="_blank">{check.alias || check.url}</a></h4>
         <p>
-            {@html `${(check.down ? 'DOWN' : 'UP')} |
-                    ${(check.uptime.toFixed(2))}% |
-                    ${(check.domain.remaining_days + 'd left')}`}
+            <span style="font-weight: bold; color: {!check.down ? colors.UP : colors.DOWN}"
+                >{!check.down ? 'UP' : 'DOWN'}</span
+            >
+            :: {check.uptime.toFixed(2)}%
+            <span style="color: var(--text-secondary)"
+                >({check.domain.remaining_days + 'd left'})</span
+            >
         </p>
         <p>checked: {check.last_check_at}</p>
     </div>
 {/each}
 
-<hr/>
-
-<h2>in the last 7 days</h2>
-<h3>languages</h3>
-{#each languages as language}
-    <p style="color: {language.color}">{language.name}: <span style="font-family: firacode">{language.decimal}h</span></p>
-{/each}
-
-<h3>editors</h3>
-{#each editors as editor}
-    <p style="color: {editor.color}">{editor.name}: {editor.percent}%</p>
-{/each}
-
-<h3>coding activity</h3>
-{#if activity}
-    <p>total: <span style="font-family: firacode">{activity.hours}h</span></p>
-{/if}
 <hr />
+<h2>in the last 7 days</h2>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between">
+    <div>
+        <h4 style="text-decoration: underline">languages</h4>
+        {#each languages as language}
+            <p style="color: {language.color}">
+                {language.name}: <span style="font-family: firacode">{language.decimal}h</span>
+            </p>
+        {/each}
+    </div>
+
+    <div>
+        <h4 style="text-decoration: underline">editors</h4>
+        {#each editors as editor}
+            <p style="color: {editor.color}">{editor.name}: {editor.percent}%</p>
+        {/each}
+    </div>
+
+    <div>
+        <h4 style="text-decoration: underline">coding activity</h4>
+        {#if activity}
+            <p>total: <span style="font-family: firacode">{activity.hours}h</span></p>
+        {/if}
+    </div>
+</div>
 
 <footer>
-    <p>© {new Date().getFullYear()} salm.dev | nico@<span style="display:none">I hope this works :)</span>salm.<span style="display:none">A second one for good measure</span>dev</p>
+    <p>
+        © {new Date().getFullYear()} salm.dev | nico@<span style="display:none"
+            >I hope this works :)</span
+        >salm.<span style="display:none">A second one for good measure</span>dev
+    </p>
 </footer>

@@ -1,7 +1,7 @@
 import type { PageServerLoad } from './$types';
 import type { PageData } from '$lib/api';
 import { env } from '$env/dynamic/private';
-import { error } from "@sveltejs/kit";
+import { error } from '@sveltejs/kit';
 
 const URLS = {
     checks: 'https://updown.io/api/checks',
@@ -11,15 +11,18 @@ const URLS = {
 };
 
 export const load: PageServerLoad = async (): Promise<PageData> => {
-
     const [checksRes, languagesRes, editorsRes, activityRes] = await Promise.all([
-        fetch(URLS.checks, { headers: { 'X-API-KEY': env.UPDOWNIO_KEY, 'Accept-Encoding': 'gzip' } }),
+        fetch(URLS.checks, {
+            headers: { 'X-API-KEY': env.UPDOWNIO_KEY, 'Accept-Encoding': 'gzip' }
+        }),
         fetch(URLS.languages),
         fetch(URLS.editors),
         fetch(URLS.activity)
     ]);
 
-    const checks = checksRes.ok ? await checksRes.json() : error(checksRes.status, checksRes.statusText);
+    const checks = checksRes.ok
+        ? await checksRes.json()
+        : error(checksRes.status, checksRes.statusText);
     const languages = languagesRes.ok ? (await languagesRes.json()).data : [];
     const editors = editorsRes.ok ? (await editorsRes.json()).data : [];
     const activity = activityRes.ok ? (await activityRes.json()).data : [];
