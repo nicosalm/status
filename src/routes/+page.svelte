@@ -38,32 +38,32 @@
                 >({check.domain.remaining_days + 'd left'})</span
             >
         </p>
-        <p>checked: {check.last_check_at}</p>
+        <p style="color: var(--text-secondary);">last checked: <code>{check.last_check_at}</code></p>
     </div>
 {/each}
 <hr />
 <h2>in the last 7 days</h2>
 <div style="display: flex; flex-wrap: wrap; justify-content: space-between">
     <div>
-        <h4 style="text-decoration: underline">languages</h4>
+        <h4>languages</h4>
         {#each languages as language}
             <p style="color: {language.color}">
-                {language.name}: <span style="font-family: firacode">{language.decimal}h</span>
+                {language.name}: <code>{language.decimal}h</code>
             </p>
         {/each}
     </div>
 
     <div>
-        <h4 style="text-decoration: underline">editors</h4>
+        <h4>editors</h4>
         {#each editors as editor}
-            <p style="color: {editor.color}">{editor.name}: {editor.percent}%</p>
+            <p style="color: {editor.color}">{editor.name}: <code>{editor.percent}%</code></p>
         {/each}
     </div>
 
     <div>
-        <h4 style="text-decoration: underline">coding activity</h4>
+        <h4>coding activity</h4>
         {#if activity}
-            <p>total: <span style="font-family: firacode">{activity.hours}h</span></p>
+            <p>Total: <code>{activity.hours}h</code></p>
         {/if}
     </div>
 </div>
