@@ -6,7 +6,7 @@
 
     let { checks, editors } = $derived(data);
     let languages = $derived(
-        data.languages.filter((l: Language) => l.name != 'Other' && l.decimal >= 0.5)
+        data.languages.filter((l: Language) => l.name != 'Other' && l.decimal >= 0.25)
     );
     let activity = $derived.by(() => {
         const seconds = data.activity.reduce(
