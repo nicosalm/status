@@ -35,7 +35,7 @@
             >
             :: {check.uptime.toFixed(2)}%
             <span style="color: var(--text-secondary)"
-                >({check.domain.remaining_days + 'd left'})</span
+                >({check.domain?.remaining_days ?? '-'}d left)</span
             >
         </p>
         <p style="color: var(--text-secondary);">last checked: <code>{check.last_check_at}</code></p>
